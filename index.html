@@ -56,7 +56,7 @@
         for (command in data) {
           var total = data[command]['Total']
           var topPercent = percent(data[command]['MaxCount'], total)
-          var browsePercent = percent(data[command]['Browse'], total)
+          var browsePercent = percent(data[command]['BrowseBlade'], total)
           rows.push({
             'command': command,
             'browsePercent': browsePercent,
