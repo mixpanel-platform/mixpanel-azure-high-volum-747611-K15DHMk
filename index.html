@@ -36,18 +36,18 @@
       var selectedEvent;
 
       function runQuery() {
-         var dateRange  = dateSelector.MPDatepicker('value');
+        var dateRange  = dateSelector.MPDatepicker('value');
+        
         var commandExParams = {
-          event: 'CommandExecuted',
           type: 'general',
           where: '"Blade/Browse" in string(properties["Source"])',
           on: 'properties["Name"]',
           unit:'day'
         }
-       _.extend(commandExParams, dateSelector)
+        _.extend(commandExParams, dateSelector)
         debugger
         
-        MP.api.segment(selectedEvent, undefined, dateRange).done(function(results) {
+        MP.api.segment('CommandExecuted', undefined, dateRange).done(function(results) {
           // Need a sorted date Array in order to calculate a rolling sum
           debugger
           var dateSeries = generateSortedDateSeries(results.json[selectedEvent]);
