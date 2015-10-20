@@ -3,6 +3,7 @@
   <head>
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/css/reset.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.css">
+    <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
       <style>
        #run {
@@ -33,8 +34,44 @@
       var propSelector  = $('#propSelect').MPPropertySelect();
       var dateSelector  = $('#dateSelect').MPDatepicker();
       var eventGraph    = $('#graph').MPChart({chartType: 'line'});
-      var selectedEvent;
-
+      var dataObj;
+      
+      $('#table').DataTable({
+        columns: [
+          { title: "Command", data: "command" },
+          { title: "Browse Blade", data: "browsePercent" },
+          { title: "Top Blade", data: "topBlade" },
+          { title: "Top Blade %", data: "topPercent" },
+          { title: "Other %", data: "otherPercent" },
+          { title: "Total", data: "total" },
+        ]
+      })
+      
+      
+      drawTable= function(data){
+        var rows = []
+        for (command in data) {
+          var total = command['Total']
+          var topPercent = percent(command['MaxCount'], total)
+          var browsePercent = percent(command['Browse'], total)
+          rows.push({
+            'command': command,
+            'browsePercent': browsePercent,
+            'topBlade': command['MaxBlade'],
+            'topPercent': topPercent,
+            'otherPercent': (100 - topPercent - browsePercent),
+            'total': total,
+          })
+        }
+        
+        var table = $('#table').DataTable();
+        table.rows.add(rows).draw();
+      }
+      
+      function percent(numerator, denominator){
+        return Math.floor( numerator / denominator * 100)
+      }
+      
       function runQuery() {
         var dateRange  = dateSelector.MPDatepicker('value');
         var endpoint = 'https://mixpanel.com/api/2.0/segmentation/multiseg'
@@ -57,13 +94,29 @@
         
         MP.api.query(endpoint, params).done(function(Data) {
           // Need a sorted date Array in order to calculate a rolling sum
-          _.each(Data.data.values, function(obj, command) { 
+          _.each(Data.data.values, function(obj, command) {
+            dataObj[command] = {
+              BrowseBlade: 0,
+              MaxBlade : '',
+              MaxCount : 0,
+              Total: 0,
+            }
             _.each(obj, function(val, key){
               console.log(command + ': ' + val);
-              debugger
+              count = MP.Data.inst(val).sum().values()
+              dataObj[command]['Total'] += count
+              switch (key.includes('Blade/Browse'))
+              case True:
+                dataObj[command]['BrowseBlade'] += count
+                break;
+              if (count > dataObj[command]['MaxCount']) {
+                dataObj[command]['MaxCount'] = count
+                dataObj[command]['MaxBlade'] = key 
+              }
             })
-          }); 
-
+          });
+          debugger
+          drawTable(dataObj)
         });
 
         function generateSortedDateSeries(dateCollection) {
