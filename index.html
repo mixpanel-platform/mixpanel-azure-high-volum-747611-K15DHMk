@@ -47,11 +47,11 @@
         scrollX: true,
         columns: [
           { title: "Command", data: "command"},
-          { title: "Browse Blade", data: "browsePercent", width: "10%" },
+          { title: "Browse Blade", data: "browsePercent", width: "5%" },
           { title: "Top Blade", data: "topBlade"},
-          { title: "Top Blade %", data: "topPercent", width:"10%" },
-          { title: "Other %", data: "otherPercent", width:"10%" },
-          { title: "Total", data: "total", width:"20%" },
+          { title: "Top Blade %", data: "topPercent", width:"5%" },
+          { title: "Other %", data: "otherPercent", width:"5%" },
+          { title: "Total", data: "total", width:"5%" },
         ]
       })
       
@@ -64,10 +64,10 @@
           var browsePercent = percent(data[command]['BrowseBlade'], total)
           rows.push({
             'command': command,
-            'browsePercent': browsePercent,
+            'browsePercent': browsePercent + "%",
             'topBlade': data[command]['MaxBlade'],
-            'topPercent': topPercent,
-            'otherPercent': (100 - topPercent - browsePercent),
+            'topPercent': topPercent + "%",
+            'otherPercent': (100 - topPercent - browsePercent) + "%",
             'total': total,
           })
         }
@@ -82,7 +82,7 @@
         if (denominator != 0){
           value = Math.floor( numerator / denominator * 100)
         }
-        return value + "%"
+        return value
       }
       
       function runQuery() {
