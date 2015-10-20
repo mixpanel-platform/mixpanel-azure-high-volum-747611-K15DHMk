@@ -68,7 +68,8 @@
         }
         
         var table = $('#table').DataTable();
-        table.rows.add(rows).draw();
+        table.rows.add(rows).columns.adjust().draw();
+        
       }
       
       function percent(numerator, denominator){
