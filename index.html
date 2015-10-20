@@ -53,15 +53,13 @@
           on: 'properties["Name"]',
           unit:'day'
         }
-        _.extend(commandExParams, dateRange)
+        _.extend(params, dateRange)
         debugger
         
-        MP.api.query(endpoint, parameters).done(function(Data) {
+        MP.api.query(endpoint, params).done(function(Data) {
           // Need a sorted date Array in order to calculate a rolling sum
           debugger
-          var dateSeries = generateSortedDateSeries(results.json[selectedEvent]);
 
-          calculateSums(chartData, dateSeries, results);
         });
 
         function generateSortedDateSeries(dateCollection) {
