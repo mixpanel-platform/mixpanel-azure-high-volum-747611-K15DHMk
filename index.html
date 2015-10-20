@@ -30,15 +30,13 @@
   </head>
   <body class="mixpanel-platform-body">
     <div class="mixpanel-platform-section">
-      <div id="dateRange" style="float: left;"></div>
+      <div id="dateSelector" style="float: left;"></div>
       <button id="run" value="Run">Run</button>
       <div style="clear:both"></div>
     </div>
     <table id="table" class="display" width="100%"></table>
     <script>
-      var propSelector  = $('#propSelect').MPPropertySelect();
       var dateSelector  = $('#dateSelect').MPDatepicker();
-      var eventGraph    = $('#graph').MPChart({chartType: 'line'});
       var dataObj = {};
       
       $('#table').DataTable({
