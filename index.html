@@ -37,17 +37,26 @@
 
       function runQuery() {
         var dateRange  = dateSelector.MPDatepicker('value');
+        var endpoint = 'https://mixpanel.com/api/2.0/segmentation/multiseg'
         
-        var commandExParams = {
+        var browseBlade = {
           type: 'general',
           where: '"Blade/Browse" in string(properties["Source"])',
+          on: 'properties["Name"]',
+          unit:'day'
+        }
+        
+        var params = {
+          type: 'general',
+          inner: 'properties["Source"]',
+          outer: 'properties["Name"]',
           on: 'properties["Name"]',
           unit:'day'
         }
         _.extend(commandExParams, dateRange)
         debugger
         
-        MP.api.segment('CommandExecuted', undefined, dateRange).done(function(results) {
+        MP.api.query(endpoint, parameters).done(function(Data) {
           // Need a sorted date Array in order to calculate a rolling sum
           debugger
           var dateSeries = generateSortedDateSeries(results.json[selectedEvent]);
