@@ -44,13 +44,14 @@
       var dataObj = {};
       
       $('#table').DataTable({
+        scrollX: True,
         columns: [
-          { title: "Command", data: "command" },
-          { title: "Browse Blade", data: "browsePercent" },
-          { title: "Top Blade", data: "topBlade" },
-          { title: "Top Blade %", data: "topPercent" },
-          { title: "Other %", data: "otherPercent" },
-          { title: "Total", data: "total" },
+          { title: "Command", data: "command"},
+          { title: "Browse Blade", data: "browsePercent", width: "10%" },
+          { title: "Top Blade", data: "topBlade"},
+          { title: "Top Blade %", data: "topPercent", width:"10%" },
+          { title: "Other %", data: "otherPercent", width:"10%" },
+          { title: "Total", data: "total", width:"20%" },
         ]
       })
       
