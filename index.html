@@ -105,10 +105,9 @@
               console.log(command + ': ' + val);
               count = MP.Data.inst(val).sum().values()
               dataObj[command]['Total'] += count
-              switch (key.includes('Blade/Browse'))
-              case True:
+              if(key.includes('Blade/Browse')){
                 dataObj[command]['BrowseBlade'] += count
-                break;
+              }
               if (count > dataObj[command]['MaxCount']) {
                 dataObj[command]['MaxCount'] = count
                 dataObj[command]['MaxBlade'] = key 
