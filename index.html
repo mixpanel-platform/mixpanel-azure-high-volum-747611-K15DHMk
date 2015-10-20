@@ -44,7 +44,7 @@
           on: 'properties["Name"]',
           unit:'day'
         }
-        _.extend(commandExParams, dateSelector)
+        _.extend(commandExParams, dateRange)
         debugger
         
         MP.api.segment('CommandExecuted', undefined, dateRange).done(function(results) {
