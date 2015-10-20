@@ -54,13 +54,13 @@
       drawTable= function(data){
         var rows = []
         for (command in data) {
-          var total = command['Total']
-          var topPercent = percent(command['MaxCount'], total)
-          var browsePercent = percent(command['Browse'], total)
+          var total = data[command]['Total']
+          var topPercent = percent(data[command]['MaxCount'], total)
+          var browsePercent = percent(data[command]['Browse'], total)
           rows.push({
             'command': command,
             'browsePercent': browsePercent,
-            'topBlade': command['MaxBlade'],
+            'topBlade': data[command]['MaxBlade'],
             'topPercent': topPercent,
             'otherPercent': (100 - topPercent - browsePercent),
             'total': total,
@@ -72,7 +72,11 @@
       }
       
       function percent(numerator, denominator){
-        return Math.floor( numerator / denominator * 100)
+        var value = 0
+        if (denominator != 0){
+          value = Math.floor( numerator / denominator * 100)
+        }
+        return value
       }
       
       function runQuery() {
