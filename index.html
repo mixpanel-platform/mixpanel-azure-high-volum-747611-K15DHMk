@@ -34,16 +34,24 @@
       var selectedEvent;
 
       function runQuery() {
-        var dateRange  = dateSelector.MPDatepicker('value');
-        var chartData = {};
-        chartData[selectedEvent] = {};
+         var dateRange  = dateSelector.MPDatepicker('value');
+        var commandExParams = {
+          event:CommandExecuted
+          type:general
+          where:"Blade/Browse" in string(properties["Source"])
+          limit:255
+          on:properties["Name"]
+          unit:day
+        }
+       _.extend(commandExParams, dateSelector)
+        debugger
         
         MP.api.segment(selectedEvent, undefined, dateRange).done(function(results) {
           // Need a sorted date Array in order to calculate a rolling sum
+          debugger
           var dateSeries = generateSortedDateSeries(results.json[selectedEvent]);
 
           calculateSums(chartData, dateSeries, results);
-          eventGraph.MPChart('setData', chartData);
         });
 
         function generateSortedDateSeries(dateCollection) {
@@ -58,7 +66,6 @@
           var sum = 0;
           dateSeries.forEach(function(date) {
             sum = sum + apiResults.json[selectedEvent][date];
-            chartData[selectedEvent][date] = sum;
           });
         }
       }
