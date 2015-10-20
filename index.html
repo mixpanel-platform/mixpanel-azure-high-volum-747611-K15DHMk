@@ -27,7 +27,7 @@
   <body class="mixpanel-platform-body">
     <div id="dateSelect" style="float: right;"></div>
     <div style="clear: both;"></div>
-    <button id="run" value="Run" style="display: none;">Run</button>
+    <button id="run" value="Run">Run</button>
     <div id="table"></div>
     <script>
       var propSelector  = $('#propSelect').MPPropertySelect();
@@ -71,8 +71,7 @@
         }
       }
       
-      eventSelector.on('change', function(e, selectedEventName) {
-        selectedEvent = selectedEventName;
+      $('#run').on('click', function(e){
         runQuery();
       });
       dateSelector.on('change', runQuery);
