@@ -59,6 +59,12 @@
         MP.api.query(endpoint, params).done(function(Data) {
           // Need a sorted date Array in order to calculate a rolling sum
           debugger
+          _.each(Data.data.values, function(obj, command) { 
+            _.each(obj, function(val, key){
+              console.log(command + ': ' + val);
+              debugger
+            })
+          }); 
 
         });
 
