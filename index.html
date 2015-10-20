@@ -121,9 +121,13 @@
               if(key.includes('Blade/Browse')){
                 dataObj[command]['BrowseBlade'] += count
               }
+              var blade = dataObj[command]['MaxBlade'] = key.split('/')[3] || ''
+              if (maxBlade == blade){
+                dataObj[command]['MaxCount'] += count
+              }
               if (count > dataObj[command]['MaxCount']) {
                 dataObj[command]['MaxCount'] = count
-                dataObj[command]['MaxBlade'] = key.split('/')[3] || ''
+                dataObj[command]['MaxBlade'] = blade
               }
             })
           });
