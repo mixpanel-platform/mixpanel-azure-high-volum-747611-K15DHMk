@@ -121,8 +121,8 @@
               if(key.includes('Blade/Browse')){
                 dataObj[command]['BrowseBlade'] += count
               }
-              var blade = dataObj[command]['MaxBlade'] = key.split('/')[3] || ''
-              if (maxBlade == blade){
+              var blade = key.split('/')[3] || ''
+              if (dataObj[command]['MaxBlade'] == blade){
                 dataObj[command]['MaxCount'] += count
               }
               if (count > dataObj[command]['MaxCount']) {
