@@ -122,7 +122,7 @@
               }
               if (count > dataObj[command]['MaxCount']) {
                 dataObj[command]['MaxCount'] = count
-                dataObj[command]['MaxBlade'] = key 
+                dataObj[command]['MaxBlade'] = key.split('/')[3]
               }
             })
           });
