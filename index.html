@@ -38,12 +38,11 @@
       function runQuery() {
          var dateRange  = dateSelector.MPDatepicker('value');
         var commandExParams = {
-          event:CommandExecuted
-          type:general
-          where:"Blade/Browse" in string(properties["Source"])
-          limit:255
-          on:properties["Name"]
-          unit:day
+          event: 'CommandExecuted',
+          type: 'general',
+          where: '"Blade/Browse" in string(properties["Source"])',
+          on: 'properties["Name"]',
+          unit:'day'
         }
        _.extend(commandExParams, dateSelector)
         debugger
